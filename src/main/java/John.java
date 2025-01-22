@@ -5,10 +5,12 @@ public class John {
     static class task {
         private final String taskName;
         private Boolean status;
+        private String type;
 
-        task(String taskName) {
+        task(String taskName, String type) {
             this.taskName = taskName;
             this.status = false;
+            this.type = type;
         }
 
         public void done() {
@@ -27,8 +29,66 @@ public class John {
             return this.status;
         }
 
+        public String check() {
+            String check;
+            if (this.status) {
+                check = "X";
+            } else {
+                check = " ";
+            }
+            return check;
+        }
+
         public void toggle() {
             this.status = !this.status;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getType() {
+            if (type.equals("deadline")) {
+                return "D";
+            } else if (type.equals("todo")) {
+                return "T";
+            } else if (type.equals("event")) {
+                return "E";
+            } else {
+                return "";
+            }
+        }
+    }
+
+    static class event extends task {
+        private String from;
+        private String to;
+
+        event(String taskName, String type, String from, String to) {
+            super(taskName, type);
+            this.from = from;
+            this.to = to;
+        }
+
+        @Override
+        public String name() {
+            // TODO Auto-generated method stub
+            return super.name() + " (from: " + from + " to: " + to + ")";
+        }
+    }
+
+    static class deadline extends task {
+        private String by;
+
+        deadline(String taskName, String type, String by) {
+            super(taskName, type);
+            this.by = by;
+        }
+
+        @Override
+        public String name() {
+            // TODO Auto-generated method stub
+            return super.name() + " (by: " + by + ")";
         }
     }
 
@@ -57,10 +117,22 @@ public class John {
                 int index = Integer.parseInt(input.substring(5));
                 list.get(index - 1).toggle();
                 System.out.println("--------------------------------------------------------------------\n");
+            } else if (input.substring(0, 4).equals("todo")) {
+                list.add(new task(input.substring(5), input.substring(0, 4)));
+                repeat(list.get(list.size() - 1), list.size());
+            } else if (input.substring(0, 8).equals("deadline")) {
+                String byPart = input.split("/by")[1].trim();
 
-            } else {
-                list.add(new task(input));
-                repeat(input);
+                list.add(new deadline(input.split("deadline ")[1].split("/by")[0].trim(), input.substring(0, 8),
+                        byPart));
+                repeat(list.get(list.size() - 1), list.size());
+            } else if (input.substring(0, 5).equals("event")) {
+                String fromPart = input.split("/from")[1].split("/to")[0].trim();
+                String toPart = input.split("/to")[1].trim();
+
+                list.add(new event(input.split("event ")[1].split("/from")[0].trim(), input.substring(0, 5), fromPart,
+                        toPart));
+                repeat(list.get(list.size() - 1), list.size());
             }
             input = sc.nextLine();
         }
@@ -82,23 +154,29 @@ public class John {
                 + "--------------------------------------------------------------------\n");
     }
 
-    public static void repeat(String input) {
+    public static void repeat(task input, int listSize) {
         System.out.println("--------------------------------------------------------------------\n"
-                + "added: " + input + "\n"
+                + "Got it. I've added this task:\n"
+                + "  " + item(input) + "\n"
+                + listSize(listSize)
                 + "--------------------------------------------------------------------\n");
+    }
+
+    public static String item(task input) {
+        String x = "[" + input.getType() + "][" + input.check() + "] " + input.name();
+        return x;
+    }
+
+    public static String listSize(int size) {
+        String x = "Now you have " + size + " tasks in the list.\n";
+        return x;
     }
 
     public static void listAll(ArrayList<task> list) {
         int counter = 1;
         System.out.println("--------------------------------------------------------------------");
         for (task item : list) {
-            String check;
-            if (item.status) {
-                check = "X";
-            } else {
-                check = " ";
-            }
-            System.out.println(counter + ".[" + check + "] " + item.name());
+            System.out.println(counter + "." + item(item));
             counter++;
         }
         System.out.println("--------------------------------------------------------------------\n");
