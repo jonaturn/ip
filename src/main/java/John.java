@@ -167,6 +167,17 @@ public class John {
                             fromPart,
                             toPart));
                     repeat(list.get(list.size() - 1), list.size());
+                } else if (input.contains("delete ")) {
+                    try {
+                        System.out.println("    ____________________________________________________________\r\n" + //
+                                "     Noted. I've removed this task:\r\n" + //
+                                "       " + item(list.get(Integer.parseInt(input.substring(7)) - 1)) + "\r\n" + //
+                                "     Now you have 4 tasks in the list.\r\n" + //
+                                "    ____________________________________________________________");
+                        list.remove(Integer.parseInt(input.substring(7)) - 1);
+                    } catch (Exception e) {
+                        throw new deleteException("Error deleting message");
+                    }
                 } else {
                     throw new taskException("\n    ____________________________________________________________\r\n" + //
                             "     Wrong input, stop trolling :-(\r\n" + //
@@ -174,7 +185,12 @@ public class John {
                 }
                 input = sc.nextLine();
             }
+        } catch (deleteException e) {
+            System.out.println(e);
+
         } catch (taskException e) {
+            System.out.println(e);
+        } catch (StringIndexOutOfBoundsException e) {
             System.out.println(e);
         }
         exit();
