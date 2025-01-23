@@ -60,6 +60,18 @@ public class John {
         }
     }
 
+    static class taskException extends Exception {
+        taskException(String message) {
+            super(message);
+        }
+    }
+
+    static class deleteException extends Exception {
+        deleteException(String message) {
+            super(message);
+        }
+    }
+
     static class event extends task {
         private String from;
         private String to;
@@ -92,7 +104,7 @@ public class John {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         // init
         Scanner sc = new Scanner(System.in);
         ArrayList<task> list = new ArrayList<>();
@@ -110,31 +122,60 @@ public class John {
         // list.add(input);
 
         // System.out.println("\n");
-        while (!input.equals("bye")) {
-            if (input.equals("list")) {
-                listAll(list);
-            } else if (input.substring(0, 4).equals("mark")) {
-                int index = Integer.parseInt(input.substring(5));
-                list.get(index - 1).toggle();
-                System.out.println("--------------------------------------------------------------------\n");
-            } else if (input.substring(0, 4).equals("todo")) {
-                list.add(new task(input.substring(5), input.substring(0, 4)));
-                repeat(list.get(list.size() - 1), list.size());
-            } else if (input.substring(0, 8).equals("deadline")) {
-                String byPart = input.split("/by")[1].trim();
+        try {
+            while (!input.equals("bye")) {
+                if (input.equals("list")) {
+                    listAll(list);
+                } else if (input.substring(0, 4).equals("mark")) {
+                    int index = Integer.parseInt(input.substring(5));
+                    list.get(index - 1).toggle();
+                    System.out.println("--------------------------------------------------------------------\n");
+                } else if (input.substring(0, 4).equals("todo")) {
+                    if (input.substring(4).equals("")) {
+                        throw new taskException(
+                                "    \n    ____________________________________________________________\r\n" + //
+                                        "       The description of a todo cannot be empty.\r\n" + //
+                                        "    ____________________________________________________________");
+                    }
+                    list.add(new task(input.substring(5), input.substring(0, 4)));
+                    repeat(list.get(list.size() - 1), list.size());
+                } else if (input.substring(0, 8).equals("deadline")) {
+                    if (input.substring(8).equals("")) {
+                        throw new taskException(
+                                "    \n    ____________________________________________________________\r\n" + //
+                                        "       The description of a deadline cannot be empty.\r\n" + //
+                                        "    ____________________________________________________________");
+                    }
 
-                list.add(new deadline(input.split("deadline ")[1].split("/by")[0].trim(), input.substring(0, 8),
-                        byPart));
-                repeat(list.get(list.size() - 1), list.size());
-            } else if (input.substring(0, 5).equals("event")) {
-                String fromPart = input.split("/from")[1].split("/to")[0].trim();
-                String toPart = input.split("/to")[1].trim();
+                    String byPart = input.split("/by")[1].trim();
 
-                list.add(new event(input.split("event ")[1].split("/from")[0].trim(), input.substring(0, 5), fromPart,
-                        toPart));
-                repeat(list.get(list.size() - 1), list.size());
+                    list.add(new deadline(input.split("deadline ")[1].split("/by")[0].trim(), input.substring(0, 8),
+                            byPart));
+                    repeat(list.get(list.size() - 1), list.size());
+                } else if (input.substring(0, 5).equals("event")) {
+                    if (input.substring(5).equals("")) {
+                        throw new taskException(
+                                "    \n    ____________________________________________________________\r\n" + //
+                                        "       The description of an event cannot be empty.\r\n" + //
+                                        "    ____________________________________________________________");
+                    }
+
+                    String fromPart = input.split("/from")[1].split("/to")[0].trim();
+                    String toPart = input.split("/to")[1].trim();
+
+                    list.add(new event(input.split("event ")[1].split("/from")[0].trim(), input.substring(0, 5),
+                            fromPart,
+                            toPart));
+                    repeat(list.get(list.size() - 1), list.size());
+                } else {
+                    throw new taskException("\n    ____________________________________________________________\r\n" + //
+                            "     Wrong input, stop trolling :-(\r\n" + //
+                            "    ____________________________________________________________");
+                }
+                input = sc.nextLine();
             }
-            input = sc.nextLine();
+        } catch (taskException e) {
+            System.out.println(e);
         }
         exit();
         sc.close();
