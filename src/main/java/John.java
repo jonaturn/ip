@@ -1,5 +1,5 @@
-import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class John {
     static class Task {
@@ -392,3 +392,4 @@ public class John {
                 "    ____________________________________________________________");
     }
 }
+//git merge example
