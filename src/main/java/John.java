@@ -1,7 +1,15 @@
 import java.io.IOException;
 import java.util.Scanner;
 
+import parser.Parser;
+import storage.Storage;
 import tasks.TaskList;
+
+import ui.Ui;
+
+import storage.Storage;
+
+import parser.Parser;
 
 public class John {
     private final Ui ui;

@@ -1,11 +1,12 @@
+package ui;
+
 import java.util.ArrayList;
 
 import tasks.Task;
 
-// import tasks.TaskList;
 
 public class Ui {
-    private String logo = "         _       _           \n"
+    private final String logo = "         _       _           \n"
             + "        | | ___ | |__  _ __  \n"
             + "     _  | |/ _ \\| '_ \\| '_ \\\n"
             + "    | |_| | (_) | | | | | | |\n"
@@ -35,13 +36,11 @@ public class Ui {
     }
 
     public String item(Task input) {
-        String x = "[" + input.getType() + "][" + input.check() + "] " + input.name();
-        return x;
+        return  "[" + input.getType() + "][" + input.check() + "] " + input.name();
     }
 
     public String listSize(int size) {
-        String x = "Now you have " + size + " tasks in the list.\n";
-        return x;
+        return "Now you have " + size + " tasks in the list.\n";
     }
 
     public void listAll(ArrayList<Task> list) {
@@ -59,16 +58,13 @@ public class Ui {
         System.out.println("    ____________________________________________________________\r\n" + //
                 "     Nice! I've marked this task as done:\r\n" + //
                 "       [X] return " + item.name() + "\r\n" + //
-                "    ____________________________________________________________\r\n" + //
-                "");
+                "    ____________________________________________________________\r\n");
     }
-
-    // merge example again
 
     public void unmark(Task item) {
         System.out.println("    ____________________________________________________________\r\n" + //
                 "     OK, I've marked this task as not done yet:\r\n" + //
-                "       [ ] return book\r\n" + //
+                "       [ ] " + item.name() + "\r\n" + //
                 "    ____________________________________________________________");
     }
 

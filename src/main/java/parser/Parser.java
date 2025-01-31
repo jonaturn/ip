@@ -1,3 +1,5 @@
+package parser;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -8,46 +10,22 @@ import tasks.Deadline;
 import tasks.Event;
 import tasks.Task;
 import tasks.TaskList;
+import tasks.Todo;
+
+import storage.Storage;
+
+import ui.Ui;
 
 public class Parser {
-    public enum inputType {
-        EXIT("bye"),
-        LIST("list"),
-        MARK("mark"),
-        UNMARK("unmark"),
-        TODO("todo"),
-        DEADLINE("deadline"),
-        EVENT("event"),
-        DELETE("delete"),
-        INVALID("invalid");
 
-        private final String commandString;
 
-        inputType(String commandString) {
-            this.commandString = commandString;
-        }
-
-        public static inputType fromString(String command) {
-            String[] parts = command.split("\\s+"); // Split by whitespace
-            if (parts.length > 0) {
-                String firstWord = parts[0];
-                for (inputType type : inputType.values()) {
-                    if (type.commandString.equals(firstWord)) {
-                        return type;
-                    }
-                }
-            }
-            return INVALID;
-        }
-    }
-
-    static class TaskException extends Exception {
+    class TaskException extends Exception {
         TaskException(String message) {
             super(message);
         }
     }
 
-    static class DeleteException extends TaskException {
+    class DeleteException extends TaskException {
         DeleteException(String message) {
             super(message);
         }
@@ -56,7 +34,7 @@ public class Parser {
     // private Ui ui;
 
     public boolean inputHandling(String input, TaskList tasklist, Ui ui, Storage storage) throws IOException {
-        inputType type = inputType.fromString(input);
+        InputType type = InputType.fromString(input);
         ArrayList<Task> list = tasklist.list();
 
         int index;
@@ -98,7 +76,7 @@ public class Parser {
                                     "       The description of a todo cannot be empty.\r\n" + //
                                     "    ____________________________________________________________");
                 }
-                item = new Task(description, "todo");
+                item = new Todo(description, "todo");
                 list.add(item);
                 ui.repeat(item, list.size());
                 break;
@@ -130,7 +108,7 @@ public class Parser {
                 String fromPart = input.split("/from")[1].split("/to")[0].trim();
                 String toPart = input.split("/to")[1].trim();
                 fromDateTime = LocalDateTime.parse(fromPart, DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
-                toTime = LocalTime.parse(toPart);
+                toTime = LocalTime.parse(toPart, DateTimeFormatter.ofPattern("HHmm"));
                 item = new Event(description, "event", fromDateTime, toTime);
                 list.add(item);
                 ui.repeat(item, list.size());

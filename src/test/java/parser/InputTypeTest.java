@@ -5,16 +5,23 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- *Tests the parser package
+ *Tests the InputType enum
  */
-
-
-class ParserTest {
+class InputTypeTest {
     /**
      * Tests the inputType function
      */
     @Test
-    public void inputHandlingTest() {
-        assertEquals(,);
+    public void testInputType() {
+        assertEquals("EXIT", InputType.fromString("bye").toString());
+        assertEquals("LIST", InputType.fromString("list").toString());
+        assertEquals("MARK", InputType.fromString("mark").toString());
+        assertEquals("UNMARK", InputType.fromString("unmark").toString());
+        assertEquals("TODO", InputType.fromString("todo").toString());
+        assertEquals("DEADLINE", InputType.fromString("deadline").toString());
+        assertEquals("EVENT", InputType.fromString("event").toString());
+        assertEquals("DELETE", InputType.fromString("delete").toString());
+        assertEquals("INVALID", InputType.fromString("invalid").toString());
+
     }
 }
