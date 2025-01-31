@@ -1,5 +1,10 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+// import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class John {
     static class Task {
@@ -87,6 +92,14 @@ public class John {
             // TODO Auto-generated method stub
             return super.name() + " (from: " + from + " to: " + to + ")";
         }
+
+        public String from() {
+            return this.from;
+        }
+
+        public String to() {
+            return this.to();
+        }
     }
 
     static class Deadline extends Task {
@@ -101,6 +114,10 @@ public class John {
         public String name() {
             // TODO Auto-generated method stub
             return super.name() + " (by: " + by + ")";
+        }
+
+        public String by() {
+            return this.by;
         }
     }
 
@@ -146,6 +163,10 @@ public class John {
                 + "     _  | |/ _ \\| '_ \\| '_ \\\n"
                 + "    | |_| | (_) | | | | | | |\n"
                 + "     \\___/ \\___/|_| |_|_| |_|\n";
+        Path path = Paths.get("data", "john.txt");
+        FileWriter fw = new FileWriter(path.toString());
+
+        System.out.println(path);
 
         System.out.println("Hello from\n" + logo);
 
@@ -163,8 +184,10 @@ public class John {
                 switch (type) {
                     case EXIT:
                         exit();
+                        // System.out.println(save(list, fw));
+                        fw.write(save(list, fw));
                         listen = false;
-                        ;
+                        break;
                     case LIST:
                         listAll(list);
                         break;
@@ -248,91 +271,15 @@ public class John {
                     // break;
                 }
             }
-            // list.add(input);
 
-            // System.out.println("\n");
-            // try {
-            // while (!input.equals("bye")) {
-            // if (input.equals("list")) {
-            // listAll(list);
-            // } else if (input.substring(0, 4).equals("mark")) {
-            // int index = Integer.parseInt(input.substring(5));
-            // list.get(index - 1).toggle();
-            // System.out.println("--------------------------------------------------------------------\n");
-            // } else if (input.substring(0, 4).equals("todo")) {
-            // if (input.substring(4).equals("")) {
-            // throw new taskException(
-            // " \n ____________________________________________________________\r\n" + //
-            // " The description of a todo cannot be empty.\r\n" + //
-            // " ____________________________________________________________");
-            // }
-            // list.add(new Task(input.substring(5), input.substring(0, 4)));
-            // repeat(list.get(list.size() - 1), list.size());
-            // } else if (input.substring(0, 8).equals("deadline")) {
-            // if (input.substring(8).equals("")) {
-            // throw new taskException(
-            // " \n ____________________________________________________________\r\n" + //
-            // " The description of a deadline cannot be empty.\r\n" + //
-            // " ____________________________________________________________");
-            // }
-
-            // String byPart = input.split("/by")[1].trim();
-
-            // list.add(new Deadline(input.split("deadline ")[1].split("/by")[0].trim(),
-            // input.substring(0, 8),
-            // byPart));
-            // repeat(list.get(list.size() - 1), list.size());
-            // } else if (input.substring(0, 5).equals("event")) {
-            // if (input.substring(5).equals("")) {
-            // throw new taskException(
-            // " \n ____________________________________________________________\r\n" + //
-            // " The description of an event cannot be empty.\r\n" + //
-            // " ____________________________________________________________");
-            // }
-
-            // String fromPart = input.split("/from")[1].split("/to")[0].trim();
-            // String toPart = input.split("/to")[1].trim();
-
-            // list.add(new Event(input.split("event ")[1].split("/from")[0].trim(),
-            // input.substring(0, 5),
-            // fromPart,
-            // toPart));
-            // repeat(list.get(list.size() - 1), list.size());
-            // } else if (input.contains("delete ")) {
-            // try {
-            // System.out.println("
-            // ____________________________________________________________\r\n" + //
-            // " Noted. I've removed this task:\r\n" + //
-            // " " + item(list.get(Integer.parseInt(input.substring(7)) - 1)) + "\r\n" + //
-            // " Now you have 4 tasks in the list.\r\n" + //
-            // " ____________________________________________________________");
-            // list.remove(Integer.parseInt(input.substring(7)) - 1);
-            // } catch (Exception e) {
-            // throw new deleteException("Error deleting message");
-            // }
-            // } else {
-            // throw new taskException("\n
-            // ____________________________________________________________\r\n" + //
-            // " Wrong input, stop trolling :-(\r\n" + //
-            // " ____________________________________________________________");
-            // }
-            // input = sc.nextLine();
-            // }
-            // } catch (deleteException e) {
-            // System.out.println(e);
-
-            // } catch (taskException e) {
-            // System.out.println(e);
-            // } catch (StringIndexOutOfBoundsException e) {
-            // System.out.println(e);
-            // }
             catch (taskException e) {
                 System.out.println(e.getMessage());
                 exit();
                 sc.close();
+                fw.write(save(list, fw));
             }
         }
-
+        fw.close();
     }
 
     public static void greet() {
@@ -390,6 +337,24 @@ public class John {
                 "     OK, I've marked this task as not done yet:\r\n" + //
                 "       [ ] return book\r\n" + //
                 "    ____________________________________________________________");
+    }
+
+    public static String save(ArrayList<Task> al, FileWriter fw) throws IOException {
+        String content = "";
+        for (Task task : al) {
+            content = task.getType() + " | [" + task.check() + "] " + task.name();
+            if (task.getType() == "D") {
+                Deadline task1 = (Deadline) task;
+                content += " | " + task1.by() + "\n";
+            } else if (task.getType() == "E") {
+                Event task1 = (Event) task;
+                content += " | from " + task1.from() + " to " + task1.to() + "\n";
+            } else {
+                content += "\n";
+            }
+        }
+        // fw.write(content);
+        return content;
     }
 }
 
