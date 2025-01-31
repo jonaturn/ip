@@ -124,6 +124,15 @@ public class Parser {
                         + "    ____________________________________________________________");
                 list.remove(index);
                 break;
+            case FIND:
+                description = input.substring(5);
+                if (description.isEmpty()) {
+                    throw new TaskException("Cannot find blank.");
+                }
+                System.out.println("    ____________________________________________________________"
+                        + "Here are the matching tasks in your list:\r\n");
+                ui.listAll(tasklist.match(description));
+                break;
             case INVALID:
                 throw new TaskException(
                         "\n    ____________________________________________________________\r\n"

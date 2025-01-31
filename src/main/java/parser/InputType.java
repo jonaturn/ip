@@ -4,6 +4,7 @@ package parser;
  * Enums for commands
  */
 public enum InputType {
+
     EXIT("bye"),
     LIST("list"),
     MARK("mark"),
@@ -12,7 +13,8 @@ public enum InputType {
     DEADLINE("deadline"),
     EVENT("event"),
     DELETE("delete"),
-    INVALID("invalid");
+    INVALID("invalid"),
+    FIND("find");
 
     private final String commandString;
 

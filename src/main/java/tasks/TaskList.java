@@ -20,4 +20,20 @@ public class TaskList {
         return this.tl;
     }
 
+    /**
+     * Returns an ArrayList of Tasks that matches the keyword
+     *
+     * @param keyword keyword in string
+     * @return ArrayList of matches
+     */
+    public ArrayList<Task> match(String keyword) {
+        ArrayList<Task> matches = new ArrayList<>();
+        for (Task item : tl) {
+            if (item.name().contains(keyword)) {
+                matches.add(item);
+            }
+        }
+        return matches;
+    }
+
 }
