@@ -1,10 +1,16 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-// import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.time.temporal.ChronoUnit;
+import java.time.format.FormatStyle;
 
 public class John {
     static class Task {
@@ -78,10 +84,10 @@ public class John {
     }
 
     static class Event extends Task {
-        private String from;
-        private String to;
+        private LocalDateTime from;
+        private LocalTime to;
 
-        Event(String taskName, String type, String from, String to) {
+        Event(String taskName, String type, LocalDateTime from, LocalTime to) {
             super(taskName, type);
             this.from = from;
             this.to = to;
@@ -90,22 +96,24 @@ public class John {
         @Override
         public String name() {
             // TODO Auto-generated method stub
-            return super.name() + " (from: " + from + " to: " + to + ")";
+            return super.name() + " (from: " + from.format(DateTimeFormatter.ofPattern("dd MMM yyyy h:mma"))
+                    + " to: " + to.format(DateTimeFormatter.ofPattern("hh:mma"))
+                    + ")";
         }
 
         public String from() {
-            return this.from;
+            return this.from.toString();
         }
 
         public String to() {
-            return this.to();
+            return this.toString();
         }
     }
 
     static class Deadline extends Task {
-        private String by;
+        private LocalDateTime by;
 
-        Deadline(String taskName, String type, String by) {
+        Deadline(String taskName, String type, LocalDateTime by) {
             super(taskName, type);
             this.by = by;
         }
@@ -113,11 +121,11 @@ public class John {
         @Override
         public String name() {
             // TODO Auto-generated method stub
-            return super.name() + " (by: " + by + ")";
+            return super.name() + " (by: " + by.format(DateTimeFormatter.ofPattern("dd MMM yyyy h:mma")) + ")";
         }
 
         public String by() {
-            return this.by;
+            return this.by.toString();
         }
     }
 
@@ -180,6 +188,9 @@ public class John {
                 Task selected;
                 String description;
                 Task item;
+                LocalDateTime date;
+                LocalDateTime fromDateTime;
+                LocalTime toTime;
 
                 switch (type) {
                     case EXIT:
@@ -225,7 +236,8 @@ public class John {
                         }
 
                         String byPart = input.split("/by")[1].trim();
-                        item = new Deadline(description, "deadline", byPart);
+                        date = LocalDateTime.parse(byPart, DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
+                        item = new Deadline(description, "deadline", date);
                         list.add(item);
                         repeat(item, list.size());
                         break;
@@ -241,8 +253,9 @@ public class John {
                         // description = input.substring(6);
                         String fromPart = input.split("/from")[1].split("/to")[0].trim();
                         String toPart = input.split("/to")[1].trim();
-
-                        item = new Event(description, "event", toPart, fromPart);
+                        fromDateTime = LocalDateTime.parse(fromPart, DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
+                        toTime = LocalTime.parse(toPart);
+                        item = new Event(description, "event", fromDateTime, toTime);
                         list.add(item);
                         repeat(item, list.size());
                         break;
