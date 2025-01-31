@@ -11,7 +11,16 @@ import tasks.Event;
 import tasks.Task;
 // import tasks.TaskList;
 
+/**
+ * Class that handles file IO
+ */
 public class Storage {
+    /**
+     * Writes the latest list to file john.txt
+     *
+     * @param al latest list of Task
+     * @throws IOException possible exceptions from file IO
+     */
     public void save(ArrayList<Task> al) throws IOException {
         Path path = Paths.get("data", "john.txt");
         FileWriter fw = new FileWriter(path.toString());

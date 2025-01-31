@@ -1,10 +1,19 @@
 package tasks;
 
+/**
+ * Parent class for all tasks
+ */
 public class Task {
     private final String taskName;
     private Boolean status;
     private String type;
 
+    /**
+     * ConstructorS
+     *
+     * @param taskName name of task
+     * @param type type of task
+     */
     public Task(String taskName, String type) {
         this.taskName = taskName;
         this.status = false;
@@ -27,6 +36,11 @@ public class Task {
         return this.status;
     }
 
+    /**
+     * function that marks X on the task list
+     *
+     * @return X if done and blank if not
+     */
     public String check() {
         String check;
         if (this.status) {
@@ -45,6 +59,11 @@ public class Task {
         this.type = type;
     }
 
+    /**
+     * Returns the initial of the type of task
+     *
+     * @return the specified initial
+     */
     public String getType() {
         if (type.equals("deadline")) {
             return "D";

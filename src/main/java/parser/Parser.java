@@ -6,33 +6,30 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import exceptions.DeleteException;
+import exceptions.TaskException;
+import storage.Storage;
 import tasks.Deadline;
 import tasks.Event;
 import tasks.Task;
 import tasks.TaskList;
 import tasks.Todo;
-
-import storage.Storage;
-
 import ui.Ui;
 
+/**
+ * Handles all the logic for input processing
+ */
 public class Parser {
-
-
-    class TaskException extends Exception {
-        TaskException(String message) {
-            super(message);
-        }
-    }
-
-    class DeleteException extends TaskException {
-        DeleteException(String message) {
-            super(message);
-        }
-    }
-
-    // private Ui ui;
-
+    /**
+     * Processes input from UI
+     *
+     * @param input    input string
+     * @param tasklist universal list of tasks
+     * @param ui       object to handle ui
+     * @param storage  object to handle filewriting
+     * @return boolean to continue receiving input
+     * @throws IOException possible error in filewriting
+     */
     public boolean inputHandling(String input, TaskList tasklist, Ui ui, Storage storage) throws IOException {
         InputType type = InputType.fromString(input);
         ArrayList<Task> list = tasklist.list();
@@ -52,7 +49,7 @@ public class Parser {
                 // System.out.println(save(list, fw));
                 storage.save(list);
                 return false;
-                // break;
+            // break;
             case LIST:
                 ui.listAll(list);
                 break;
@@ -72,9 +69,9 @@ public class Parser {
                 description = input.substring(5);
                 if (description.isEmpty()) {
                     throw new TaskException(
-                            "    \n    ____________________________________________________________\r\n" + //
-                                    "       The description of a todo cannot be empty.\r\n" + //
-                                    "    ____________________________________________________________");
+                            "    \n    ____________________________________________________________\r\n"
+                                    + "       The description of a todo cannot be empty.\r\n"
+                                    + "    ____________________________________________________________");
                 }
                 item = new Todo(description, "todo");
                 list.add(item);
@@ -84,9 +81,9 @@ public class Parser {
                 description = input.substring(9).split("/by")[0].trim();
                 if (description.isEmpty()) {
                     throw new TaskException(
-                            "    \n    ____________________________________________________________\r\n" + //
-                                    "       The description of a deadline cannot be empty.\r\n" + //
-                                    "    ____________________________________________________________");
+                            "    \n    ____________________________________________________________\r\n"
+                                    + "       The description of a deadline cannot be empty.\r\n"
+                                    + "    ____________________________________________________________");
                 }
 
                 String byPart = input.split("/by")[1].trim();
@@ -99,9 +96,9 @@ public class Parser {
                 description = input.substring(6).split("/from")[0].trim();
                 if (description.isEmpty()) {
                     throw new TaskException(
-                            "    \n    ____________________________________________________________\r\n" + //
-                                    "       The description of an event cannot be empty.\r\n" + //
-                                    "    ____________________________________________________________");
+                            "    \n    ____________________________________________________________\r\n"
+                                    + "       The description of an event cannot be empty.\r\n"
+                                    + "    ____________________________________________________________");
                 }
 
                 // description = input.substring(6);
@@ -120,18 +117,18 @@ public class Parser {
                 }
 
                 index = Integer.parseInt(description) - 1;
-                System.out.println("    ____________________________________________________________\r\n" + //
-                        "     Noted. I've removed this task:\r\n" + //
-                        "       " + ui.item(list.get(index)) + "\r\n" + //
-                        "     Now you have 4 tasks in the list.\r\n" + //
-                        "    ____________________________________________________________");
+                System.out.println("    ____________________________________________________________\r\n"
+                        + "     Noted. I've removed this task:\r\n"
+                        + "       " + ui.item(list.get(index)) + "\r\n"
+                        + "     Now you have 4 tasks in the list.\r\n"
+                        + "    ____________________________________________________________");
                 list.remove(index);
                 break;
             case INVALID:
                 throw new TaskException(
-                        "\n    ____________________________________________________________\r\n" + //
-                                "     Wrong input, stop trolling :-(\r\n" + //
-                                    "    ____________________________________________________________");
+                        "\n    ____________________________________________________________\r\n"
+                                + "     Wrong input, stop trolling :-(\r\n"
+                                + "    ____________________________________________________________");
                 // break;
             default:
                 throw new AssertionError("Unknown command type");

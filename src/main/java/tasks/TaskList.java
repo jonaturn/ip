@@ -2,6 +2,9 @@ package tasks;
 
 import java.util.ArrayList;
 
+/**
+ * Class to keep track of all current tasks
+ */
 public class TaskList {
     private ArrayList<Task> tl;
 

@@ -4,13 +4,11 @@ import java.util.Scanner;
 import parser.Parser;
 import storage.Storage;
 import tasks.TaskList;
-
 import ui.Ui;
 
-import storage.Storage;
-
-import parser.Parser;
-
+/**
+ * Class that handles the chatbot
+ */
 public class John {
     private final Ui ui;
     private final TaskList tasklist;
@@ -24,6 +22,11 @@ public class John {
         this.tasklist = new TaskList();
     }
 
+    /**
+     * Initialises and runs the chatbot
+     *
+     * @throws IOException
+     */
     public void run() throws IOException {
         Scanner sc = new Scanner(System.in);
         Boolean listen = true;

@@ -1,11 +1,11 @@
 package parser;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Test;
+
 /**
- *Tests the InputType enum
+ * Tests the InputType enum
  */
 class InputTypeTest {
     /**
@@ -22,6 +22,5 @@ class InputTypeTest {
         assertEquals("EVENT", InputType.fromString("event").toString());
         assertEquals("DELETE", InputType.fromString("delete").toString());
         assertEquals("INVALID", InputType.fromString("invalid").toString());
-
     }
 }
