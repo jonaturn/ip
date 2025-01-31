@@ -19,4 +19,4 @@ text-ui-test/EXPECTED-UNIX.TXT
 /data/
 
 /.jar/
-MANIFEST.MF
+META-INF/MANIFEST.MF
