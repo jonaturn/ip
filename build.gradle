@@ -12,6 +12,7 @@ repositories {
 dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.10.0'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.10.0'
+    shadow 'junit:junit:3.8.2'
 }
 
 test {
@@ -29,10 +30,11 @@ test {
 }
 
 application {
-    mainClass.set("src/main/java/John.java")
+    mainClass.set('John')
 }
 
 shadowJar {
+    archiveFileName = 'john.jar'
     archiveBaseName = "john"
     archiveClassifier = null
 }
