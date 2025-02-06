@@ -44,7 +44,7 @@ public class Ui {
     public void repeat(Task input, int listSize) {
         System.out.println("--------------------------------------------------------------------\n"
                 + "Got it. I've added this task:\n"
-                + "  " + item(input) + "\n"
+                + "  " + returnOneItemAsString(input) + "\n"
                 + listSize(listSize)
                 + "--------------------------------------------------------------------\n");
     }
@@ -56,7 +56,7 @@ public class Ui {
      * @param input current task to be printed
      * @return a string to be printed
      */
-    public String item(Task input) {
+    public String returnOneItemAsString(Task input) {
         return "[" + input.getType() + "][" + input.check() + "] " + input.name();
     }
 
@@ -80,7 +80,7 @@ public class Ui {
         // ArrayList<Task> al = list.list();
         System.out.println("--------------------------------------------------------------------");
         for (Task item : list) {
-            System.out.println(counter + "." + item(item));
+            System.out.println(counter + "." + returnOneItemAsString(item));
             counter++;
         }
         System.out.println("--------------------------------------------------------------------\n");

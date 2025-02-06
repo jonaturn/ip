@@ -36,7 +36,7 @@ public class Deadline extends Task {
      *
      * @return the deadline in string
      */
-    public String by() {
+    public String returnByDate() {
         return this.by.toString();
     }
 }

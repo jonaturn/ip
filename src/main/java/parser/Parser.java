@@ -32,7 +32,7 @@ public class Parser {
      */
     public boolean inputHandling(String input, TaskList tasklist, Ui ui, Storage storage) throws IOException {
         InputType type = InputType.fromString(input);
-        ArrayList<Task> list = tasklist.list();
+        ArrayList<Task> listOfTasks = tasklist.list();
 
         int index;
         Task selected;
@@ -47,21 +47,21 @@ public class Parser {
             case EXIT:
                 ui.exit();
                 // System.out.println(save(list, fw));
-                storage.save(list);
+                storage.save(listOfTasks);
                 return false;
             // break;
             case LIST:
-                ui.listAll(list);
+                ui.listAll(listOfTasks);
                 break;
             case MARK:
                 index = Integer.parseInt(input.substring(5)) - 1;
-                selected = list.get(index);
+                selected = listOfTasks.get(index);
                 selected.done();
                 ui.mark(selected);
                 break;
             case UNMARK:
                 index = Integer.parseInt(input.substring(7)) - 1;
-                selected = list.get(index);
+                selected = listOfTasks.get(index);
                 selected.undone();
                 ui.unmark(selected);
                 break;
@@ -74,8 +74,8 @@ public class Parser {
                                     + "    ____________________________________________________________");
                 }
                 item = new Todo(description, "todo");
-                list.add(item);
-                ui.repeat(item, list.size());
+                listOfTasks.add(item);
+                ui.repeat(item, listOfTasks.size());
                 break;
             case DEADLINE:
                 description = input.substring(9).split("/by")[0].trim();
@@ -89,8 +89,8 @@ public class Parser {
                 String byPart = input.split("/by")[1].trim();
                 date = LocalDateTime.parse(byPart, DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
                 item = new Deadline(description, "deadline", date);
-                list.add(item);
-                ui.repeat(item, list.size());
+                listOfTasks.add(item);
+                ui.repeat(item, listOfTasks.size());
                 break;
             case EVENT:
                 description = input.substring(6).split("/from")[0].trim();
@@ -107,8 +107,8 @@ public class Parser {
                 fromDateTime = LocalDateTime.parse(fromPart, DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
                 toTime = LocalTime.parse(toPart, DateTimeFormatter.ofPattern("HHmm"));
                 item = new Event(description, "event", fromDateTime, toTime);
-                list.add(item);
-                ui.repeat(item, list.size());
+                listOfTasks.add(item);
+                ui.repeat(item, listOfTasks.size());
                 break;
             case DELETE:
                 description = input.substring(7);
@@ -119,10 +119,10 @@ public class Parser {
                 index = Integer.parseInt(description) - 1;
                 System.out.println("    ____________________________________________________________\r\n"
                         + "     Noted. I've removed this task:\r\n"
-                        + "       " + ui.item(list.get(index)) + "\r\n"
+                        + "       " + ui.returnOneItemAsString(listOfTasks.get(index)) + "\r\n"
                         + "     Now you have 4 tasks in the list.\r\n"
                         + "    ____________________________________________________________");
-                list.remove(index);
+                listOfTasks.remove(index);
                 break;
             case FIND:
                 description = input.substring(5);
@@ -147,7 +147,7 @@ public class Parser {
             System.out.println(e.getMessage());
             ui.exit();
             // sc.close();
-            storage.save(list);
+            storage.save(listOfTasks);
             return false;
         }
 

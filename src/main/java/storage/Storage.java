@@ -30,7 +30,7 @@ public class Storage {
             content = task.getType() + " | [" + task.check() + "] " + task.name();
             if (task.getType() == "D") {
                 Deadline task1 = (Deadline) task;
-                content += " | " + task1.by() + "\n";
+                content += " | " + task1.returnByDate() + "\n";
             } else if (task.getType() == "E") {
                 Event task1 = (Event) task;
                 content += " | from " + task1.from() + " to " + task1.to() + "\n";
