@@ -41,6 +41,10 @@ public class John {
 
     }
 
+    public String getResponse(String input) {
+        return "John heard: " + input;
+    }
+
     public static void main(String[] args) throws Exception {
         // init
         new John().run();
