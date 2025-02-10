@@ -11,9 +11,9 @@ import ui.Ui;
  */
 public class John {
     private final Ui ui;
-    private final TaskList tasklist;
     private final Storage storage;
     private final Parser parser;
+    private TaskList tasklist;
 
     John() {
         this.ui = new Ui();
@@ -29,8 +29,9 @@ public class John {
      */
     public void run() throws IOException {
         Scanner sc = new Scanner(System.in);
-        Boolean listen = true;
+        boolean listen = true;
         String input;
+        tasklist = storage.load(tasklist);
 
         ui.greet();
         while (listen) {
