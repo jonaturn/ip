@@ -48,7 +48,8 @@ public class MainWindow extends AnchorPane {
      */
     public void printJohnUI() throws IOException {
         dialogContainer.getChildren().addAll(
-                DialogBox.getJohnDialog(john.returnLogo(), johnImage));
+                DialogBox.getJohnDialog(john.returnLogo(), johnImage)
+        );
     }
 
     /**
@@ -58,7 +59,9 @@ public class MainWindow extends AnchorPane {
     @FXML
     public void handleUserInput() throws IOException {
         String input = userInput.getText();
+        assert input != null;
         String response = john.getResponse(input);
+        assert response != null;
 
         if (response.contains("Bye. Hope to see you again soon!")) {
             Platform.exit();

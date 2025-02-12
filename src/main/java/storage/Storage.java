@@ -78,6 +78,7 @@ public class Storage {
      */
     public TaskList load(TaskList tasklist) throws IOException {
         try {
+            assert this.file.exists();
             Scanner sc = new Scanner(this.file);
             while (sc.hasNextLine()) {
                 String[] taskLineParts = sc.nextLine().split(" \\|");
