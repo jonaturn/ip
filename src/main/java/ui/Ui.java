@@ -15,22 +15,27 @@ public class Ui {
             + "     \\___/ \\___/|_| |_|_| |_|\n";
 
     /**
+     * Returns the logo
+     */
+    public String returnLogo() {
+        return logo;
+    }
+    /**
      * Welcome message on start
      */
-    public void greet() {
-        System.out.println(logo + "\n"
+    public String greet() {
+        return (logo + "\n"
                 + "--------------------------------------------------------------------\n"
                 + "Hello! I'm John\n"
                 + "What can I do for you?\n\n"
                 + "--------------------------------------------------------------------\n");
-
     }
 
     /**
      * Exit message on end
      */
-    public void exit() {
-        System.out.println("--------------------------------------------------------------------\n"
+    public String exit() {
+        return ("--------------------------------------------------------------------\n"
                 + "Bye. Hope to see you again soon!\n"
                 + "--------------------------------------------------------------------\n");
     }
@@ -41,8 +46,8 @@ public class Ui {
      * @param input    last added task
      * @param listSize size of TaskList
      */
-    public void repeat(Task input, int listSize) {
-        System.out.println("--------------------------------------------------------------------\n"
+    public String repeat(Task input, int listSize) {
+        return ("--------------------------------------------------------------------\n"
                 + "Got it. I've added this task:\n"
                 + "  " + returnOneItemAsString(input) + "\n"
                 + listSize(listSize)
@@ -75,15 +80,16 @@ public class Ui {
      *
      * @param list the list to be printed
      */
-    public void listAll(ArrayList<Task> list) {
+    public String listAll(ArrayList<Task> list) {
         int counter = 1;
-        // ArrayList<Task> al = list.list();
-        System.out.println("--------------------------------------------------------------------");
+        String allTasksString = "";
+        allTasksString = ("--------------------------------------------------------------------");
         for (Task item : list) {
-            System.out.println(counter + "." + returnOneItemAsString(item));
+            allTasksString += (counter + "." + returnOneItemAsString(item));
             counter++;
         }
-        System.out.println("--------------------------------------------------------------------\n");
+        allTasksString += ("--------------------------------------------------------------------\n");
+        return allTasksString;
     }
 
     /**
@@ -91,8 +97,8 @@ public class Ui {
      *
      * @param item last marked task
      */
-    public void mark(Task item) {
-        System.out.println("    ____________________________________________________________\r\n"
+    public String mark(Task item) {
+        return ("    ____________________________________________________________\r\n"
                 + "     Nice! I've marked this task as done:\r\n"
                 + "       [X] return " + item.name() + "\r\n"
                 + "    ____________________________________________________________\r\n");
@@ -103,8 +109,8 @@ public class Ui {
      *
      * @param item last unmarked task
      */
-    public void unmark(Task item) {
-        System.out.println("    ____________________________________________________________\r\n"
+    public String unmark(Task item) {
+        return ("    ____________________________________________________________\r\n"
                 + "     OK, I've marked this task as not done yet:\r\n"
                 + "       [ ] " + item.name() + "\r\n"
                 + "    ____________________________________________________________");

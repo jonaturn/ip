@@ -30,7 +30,7 @@ public class Parser {
      * @return boolean to continue receiving input
      * @throws IOException possible error in filewriting
      */
-    public boolean inputHandling(String input, TaskList tasklist, Ui ui, Storage storage) throws IOException {
+    public String inputHandling(String input, TaskList tasklist, Ui ui, Storage storage) throws IOException {
         InputType type = InputType.fromString(input);
         ArrayList<Task> listOfTasks = tasklist.list();
 
@@ -45,26 +45,21 @@ public class Parser {
         try {
             switch (type) {
             case EXIT:
-                ui.exit();
-                // System.out.println(save(list, fw));
+                //ui.exit();
                 storage.save(listOfTasks);
-                return false;
-            // break;
+                return ui.exit();
             case LIST:
-                ui.listAll(listOfTasks);
-                break;
+                return ui.listAll(listOfTasks);
             case MARK:
                 index = Integer.parseInt(input.substring(5)) - 1;
                 selected = listOfTasks.get(index);
                 selected.done();
-                ui.mark(selected);
-                break;
+                return ui.mark(selected);
             case UNMARK:
                 index = Integer.parseInt(input.substring(7)) - 1;
                 selected = listOfTasks.get(index);
                 selected.undone();
-                ui.unmark(selected);
-                break;
+                return ui.unmark(selected);
             case TODO:
                 description = input.substring(5);
                 if (description.isEmpty()) {
@@ -75,8 +70,7 @@ public class Parser {
                 }
                 item = new Todo(description, "todo");
                 listOfTasks.add(item);
-                ui.repeat(item, listOfTasks.size());
-                break;
+                return ui.repeat(item, listOfTasks.size());
             case DEADLINE:
                 description = input.substring(9).split("/by")[0].trim();
                 if (description.isEmpty()) {
@@ -90,8 +84,7 @@ public class Parser {
                 date = LocalDateTime.parse(byPart, DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
                 item = new Deadline(description, "deadline", date);
                 listOfTasks.add(item);
-                ui.repeat(item, listOfTasks.size());
-                break;
+                return ui.repeat(item, listOfTasks.size());
             case EVENT:
                 description = input.substring(6).split("/from")[0].trim();
                 if (description.isEmpty()) {
@@ -108,8 +101,7 @@ public class Parser {
                 toTime = LocalTime.parse(toPart, DateTimeFormatter.ofPattern("HHmm"));
                 item = new Event(description, "event", fromDateTime, toTime);
                 listOfTasks.add(item);
-                ui.repeat(item, listOfTasks.size());
-                break;
+                return ui.repeat(item, listOfTasks.size());
             case DELETE:
                 description = input.substring(7);
                 if (description.isEmpty()) {
@@ -117,22 +109,20 @@ public class Parser {
                 }
 
                 index = Integer.parseInt(description) - 1;
-                System.out.println("    ____________________________________________________________\r\n"
+                listOfTasks.remove(index);
+                return ("    ____________________________________________________________\r\n"
                         + "     Noted. I've removed this task:\r\n"
                         + "       " + ui.returnOneItemAsString(listOfTasks.get(index)) + "\r\n"
                         + "     Now you have 4 tasks in the list.\r\n"
                         + "    ____________________________________________________________");
-                listOfTasks.remove(index);
-                break;
             case FIND:
                 description = input.substring(5);
                 if (description.isEmpty()) {
                     throw new TaskException("Cannot find blank.");
                 }
-                System.out.println("    ____________________________________________________________"
-                        + "Here are the matching tasks in your list:\r\n");
-                ui.listAll(tasklist.match(description));
-                break;
+                return ("    ____________________________________________________________"
+                        + "Here are the matching tasks in your list:\r\n")
+                        + ui.listAll(tasklist.match(description));
             case INVALID:
                 throw new TaskException(
                         "\n    ____________________________________________________________\r\n"
@@ -145,12 +135,10 @@ public class Parser {
             }
         } catch (TaskException e) {
             System.out.println(e.getMessage());
-            ui.exit();
-            // sc.close();
             storage.save(listOfTasks);
-            return false;
+            return e.getMessage()
+                    + "\n"
+                    + ui.exit();
         }
-
-        return true;
     }
 }

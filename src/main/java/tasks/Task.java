@@ -12,7 +12,7 @@ public class Task {
      * ConstructorS
      *
      * @param taskName name of task
-     * @param type type of task
+     * @param type     type of task
      */
     public Task(String taskName, String type) {
         this.taskName = taskName;

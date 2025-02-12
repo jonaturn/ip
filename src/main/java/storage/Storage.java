@@ -124,6 +124,7 @@ public class Storage {
                     throw new TaskException("Invalid conversion from txt file");
                 }
             }
+            sc.close();
             return tasklist;
         } catch (TaskException e) {
             System.out.println(e.getMessage());

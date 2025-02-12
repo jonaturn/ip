@@ -33,19 +33,36 @@ public class John {
         String input;
         tasklist = storage.load(tasklist);
 
-        ui.greet();
-        while (listen) {
-            input = sc.nextLine();
-            listen = parser.inputHandling(input, tasklist, ui, storage);
-        }
+        //ui.greet();
+        //while (listen) {
+        //input = sc.nextLine();
+        //listen = parser.inputHandling(input, tasklist, ui, storage);
+        //}
         sc.close();
 
     }
 
-    public String getResponse(String input) {
-        return "John heard: " + input;
+    /**
+     * returns john logo
+     */
+    public String returnLogo() throws IOException {
+        tasklist = storage.load(tasklist);
+        return ui.returnLogo();
     }
 
+    /**
+     *
+     */
+    public String getResponse(String input) throws IOException {
+        String responseString = "";
+        return parser.inputHandling(input, tasklist, ui, storage);
+    }
+
+    /**
+     * Java main method
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
         // init
         new John().run();
