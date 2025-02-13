@@ -29,7 +29,7 @@ public class TaskList {
     public ArrayList<Task> match(String keyword) {
         ArrayList<Task> matches = new ArrayList<>();
         for (Task item : tl) {
-            if (item.name().contains(keyword)) {
+            if (item.getName().contains(keyword)) {
                 matches.add(item);
             }
         }

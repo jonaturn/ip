@@ -20,6 +20,6 @@ public class EventTester {
         Event test = new Event("meeting", "event", LocalDateTime.parse("11/12/2001 0000",
                 DateTimeFormatter.ofPattern("d/M/yyyy HHmm")),
                 LocalTime.parse("1200", DateTimeFormatter.ofPattern("HHmm")));
-        assertEquals("meeting (from: 11 Dec 2001 12:00am to: 12:00pm)", test.name());
+        assertEquals("meeting (from: 11 Dec 2001 12:00am to: 12:00pm)", test.getName());
     }
 }

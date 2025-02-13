@@ -55,7 +55,14 @@ public class Storage {
         ArrayList<Task> al = taskList.list();
 
         for (Task task : al) {
-            content += task.getType() + " | [" + task.check() + "] " + task.name();
+            content += task.getTags()
+                    + " | "
+                    + task.getType()
+                    + " | ["
+                    + task.check()
+                    + "] "
+                    + task.getName();
+
             if (task.getType().equals("D")) {
                 Deadline task1 = (Deadline) task;
                 content += " | " + task1.returnByDate() + "\n";
@@ -66,7 +73,7 @@ public class Storage {
                 content += "\n";
             }
         }
-
+        fw.flush();
         fw.write(content);
         fw.close();
     }
@@ -85,13 +92,14 @@ public class Storage {
 
             while (sc.hasNextLine()) {
                 String[] taskLineParts = sc.nextLine().split(" \\|");
+                String[] tags = taskLineParts[0].substring(5).split(" ");
                 String taskDateTime = "";
-                if (taskLineParts.length == 3) {
-                    taskDateTime = taskLineParts[2];
+                if (taskLineParts.length == 4) {
+                    taskDateTime = taskLineParts[3];
                 }
-                String taskType = taskLineParts[0];
-                String[] taskStatusAndDescription = taskLineParts[1].split("]");
-                Boolean taskStatus = taskStatusAndDescription[0].contains("X");
+                String taskType = taskLineParts[1].trim();
+                String[] taskStatusAndDescription = taskLineParts[2].split("]");
+                boolean taskStatus = taskStatusAndDescription[0].contains("X");
                 String taskDescription = taskStatusAndDescription[1];
                 Task task;
 
@@ -102,6 +110,7 @@ public class Storage {
                     if (taskStatus) {
                         task.done();
                     }
+                    task = addAllTags(tags, task);
                     tasklist.add(task);
                     break;
                 case "E":
@@ -115,6 +124,7 @@ public class Storage {
                     if (taskStatus) {
                         task.done();
                     }
+                    task = addAllTags(tags, task);
                     tasklist.add(task);
                     break;
                 case "T":
@@ -122,6 +132,7 @@ public class Storage {
                     if (taskStatus) {
                         task.done();
                     }
+                    task = addAllTags(tags, task);
                     tasklist.add(task);
                     break;
                 default:
@@ -135,5 +146,19 @@ public class Storage {
             tasklist = new TaskList();
             return tasklist;
         }
+    }
+
+    /**
+     * Method to add all tags to each task on load
+     *
+     * @param tags tags for this task
+     * @param task current task
+     * @return task back as java no pass by reference
+     */
+    public Task addAllTags(String[] tags, Task task) {
+        for (String tag : tags) {
+            task.addTag(tag);
+        }
+        return task;
     }
 }

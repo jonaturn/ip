@@ -14,7 +14,8 @@ public enum InputType {
     EVENT("event"),
     DELETE("delete"),
     INVALID("invalid"),
-    FIND("find");
+    FIND("find"),
+    TAG("tag");
 
     private final String commandString;
 

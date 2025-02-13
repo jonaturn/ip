@@ -31,8 +31,8 @@ public class Event extends Task {
      * @return description of event
      */
     @Override
-    public String name() {
-        return super.name() + " (from: " + from.format(DateTimeFormatter.ofPattern("dd MMM yyyy h:mma"))
+    public String getName() {
+        return super.getName() + " (from: " + from.format(DateTimeFormatter.ofPattern("dd MMM yyyy h:mma"))
                 + " to: " + to.format(DateTimeFormatter.ofPattern("hh:mma"))
                 + ")";
     }

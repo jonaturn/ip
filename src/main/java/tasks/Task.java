@@ -1,5 +1,7 @@
 package tasks;
 
+import java.util.ArrayList;
+
 /**
  * Parent class for all tasks
  */
@@ -7,6 +9,7 @@ public class Task {
     private final String taskName;
     private Boolean status;
     private String type;
+    private ArrayList<String> tags;
 
     /**
      * ConstructorS
@@ -18,22 +21,53 @@ public class Task {
         this.taskName = taskName;
         this.status = false;
         this.type = type;
+        this.tags = new ArrayList<String>();
     }
 
+    /**
+     * Marks this task as done
+     */
     public void done() {
         this.status = true;
     }
 
+    /**
+     * Marks this task as not done
+     */
     public void undone() {
         this.status = false;
     }
 
-    public String name() {
+    /**
+     * Returns the name of this task
+     */
+    public String getName() {
         return this.taskName;
     }
 
-    public Boolean status() {
+    /**
+     * Returns the status of this task
+     */
+    public Boolean getStatus() {
         return this.status;
+    }
+
+    /**
+     * adds a tag to the task
+     */
+    public void addTag(String tag) {
+        this.tags.add(tag);
+    }
+
+    /**
+     * Returns all the tags of this task
+     */
+    public String getTags() {
+        String tagsString = "tags: ";
+        for (String tag : this.tags) {
+            tagsString += tag + " ";
+        }
+        return tagsString;
     }
 
     /**

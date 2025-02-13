@@ -6,7 +6,12 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import exceptions.*;
+import exceptions.DeadlineException;
+import exceptions.DeleteException;
+import exceptions.EventException;
+import exceptions.InvalidInputException;
+import exceptions.TaskException;
+import exceptions.TodoException;
 import storage.Storage;
 import tasks.Deadline;
 import tasks.Event;
@@ -106,8 +111,21 @@ public class Parser {
                     throw new TaskException("Cannot find blank.");
                 }
                 return ui.returnFindMessage(tasklist.match(description));
+            case TAG:
+                int taskIndex;
+                description = input.substring(4);
+                String[] descriptionParts = description.split(" ");
+                try {
+                    taskIndex = Integer.parseInt(descriptionParts[0]) - 1;
+                } catch (NumberFormatException e) {
+                    throw new TaskException("Error parsing task index");
+                }
+                String tag = descriptionParts[1];
+
+                tasklist.list().get(taskIndex).addTag(tag);
+                return ui.getTagMessage(tag, tasklist.list().get(taskIndex));
             case INVALID:
-                throw new InvalidTaskException();
+                throw new InvalidInputException();
                 // break;
             default:
                 throw new AssertionError("Unknown command type");

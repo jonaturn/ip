@@ -27,8 +27,8 @@ public class Deadline extends Task {
      * @return description of deadline
      */
     @Override
-    public String name() {
-        return super.name() + " (by: " + by.format(DateTimeFormatter.ofPattern("dd MMM yyyy h:mma")) + ")";
+    public String getName() {
+        return super.getName() + " (by: " + by.format(DateTimeFormatter.ofPattern("dd MMM yyyy h:mma")) + ")";
     }
 
     /**

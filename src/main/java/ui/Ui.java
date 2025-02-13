@@ -62,7 +62,7 @@ public class Ui {
      * @return a string to be printed
      */
     public String returnOneItemAsString(Task input) {
-        return "[" + input.getType() + "][" + input.check() + "] " + input.name();
+        return "[" + input.getType() + "][" + input.check() + "] " + input.getName();
     }
 
     /**
@@ -85,7 +85,13 @@ public class Ui {
         String allTasksString = "";
         allTasksString = ("-----------------------------------------------------\n");
         for (Task item : list) {
-            allTasksString += (counter + "." + returnOneItemAsString(item) + "\n");
+            allTasksString += (
+                    counter + "."
+                            + returnOneItemAsString(item)
+                            + " "
+                            + "\n    "
+                            + item.getTags()
+                            + "\n");
             counter++;
         }
         allTasksString += ("-----------------------------------------------------\n");
@@ -100,7 +106,7 @@ public class Ui {
     public String mark(Task item) {
         return ("    -----------------------------------------------------\r\n"
                 + "     Nice! I've marked this task as done:\r\n"
-                + "       [X] return " + item.name() + "\r\n"
+                + "       [X] return " + item.getName() + "\r\n"
                 + "    -----------------------------------------------------\r\n");
     }
 
@@ -112,7 +118,7 @@ public class Ui {
     public String unmark(Task item) {
         return ("   -----------------------------------------------------\r\n"
                 + "     OK, I've marked this task as not done yet:\r\n"
-                + "       [ ] " + item.name() + "\r\n"
+                + "       [ ] " + item.getName() + "\r\n"
                 + "    -----------------------------------------------------");
     }
 
@@ -129,9 +135,31 @@ public class Ui {
                 + "    -----------------------------------------------------");
     }
 
+    /**
+     * Returns all the task that matches keyword
+     *
+     * @param list of tasks that matches keyword
+     * @return
+     */
     public String returnFindMessage(ArrayList<Task> list) {
         return ("    -----------------------------------------------------"
                 + "Here are the matching tasks in your list:\r\n")
                 + listAll(list);
+    }
+
+    /**
+     * Returns the response to a successful tagging in String
+     *
+     * @param tag to be added
+     * @param task to have tag added
+     * @return String message for successful tagging
+     */
+    public String getTagMessage(String tag, Task task) {
+        return ("    -----------------------------------------------------\r\n"
+                + "Added "
+                + tag
+                + " to "
+                + returnOneItemAsString(task)
+                + "\n    -----------------------------------------------------");
     }
 }
