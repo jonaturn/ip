@@ -9,9 +9,9 @@ import tasks.Task;
  */
 public class Ui {
     private final String logo = "         _       _           \n"
-            + "        | | ___ | |__  _ __  \n"
-            + "     _  | |/ _ \\| '_ \\| '_ \\\n"
-            + "    | |_| | (_) | | | | | | |\n"
+            + "        | |   ___ |  |__  _ __  \n"
+            + "     _  | | /  _ \\| '_ \\| '_ \\\n"
+            + "    | |_| | | (_) | | | | | | | |\n"
             + "     \\___/ \\___/|_| |_|_| |_|\n";
 
     /**
@@ -25,19 +25,19 @@ public class Ui {
      */
     public String greet() {
         return (logo + "\n"
-                + "--------------------------------------------------------------------\n"
+                + "-----------------------------------------------------\n"
                 + "Hello! I'm John\n"
                 + "What can I do for you?\n\n"
-                + "--------------------------------------------------------------------\n");
+                + "-----------------------------------------------------\n");
     }
 
     /**
      * Exit message on end
      */
     public String exit() {
-        return ("--------------------------------------------------------------------\n"
+        return ("-----------------------------------------------------\n"
                 + "Bye. Hope to see you again soon!\n"
-                + "--------------------------------------------------------------------\n");
+                + "-----------------------------------------------------\n");
     }
 
     /**
@@ -47,11 +47,11 @@ public class Ui {
      * @param listSize size of TaskList
      */
     public String repeat(Task input, int listSize) {
-        return ("--------------------------------------------------------------------\n"
+        return ("-----------------------------------------------------\n"
                 + "Got it. I've added this task:\n"
                 + "  " + returnOneItemAsString(input) + "\n"
                 + listSize(listSize)
-                + "--------------------------------------------------------------------\n");
+                + "-----------------------------------------------------\n");
     }
 
     /**
@@ -83,12 +83,12 @@ public class Ui {
     public String listAll(ArrayList<Task> list) {
         int counter = 1;
         String allTasksString = "";
-        allTasksString = ("--------------------------------------------------------------------");
+        allTasksString = ("-----------------------------------------------------\n");
         for (Task item : list) {
-            allTasksString += (counter + "." + returnOneItemAsString(item));
+            allTasksString += (counter + "." + returnOneItemAsString(item) + "\n");
             counter++;
         }
-        allTasksString += ("--------------------------------------------------------------------\n");
+        allTasksString += ("-----------------------------------------------------\n");
         return allTasksString;
     }
 
@@ -98,10 +98,10 @@ public class Ui {
      * @param item last marked task
      */
     public String mark(Task item) {
-        return ("    ____________________________________________________________\r\n"
+        return ("    -----------------------------------------------------\r\n"
                 + "     Nice! I've marked this task as done:\r\n"
                 + "       [X] return " + item.name() + "\r\n"
-                + "    ____________________________________________________________\r\n");
+                + "    -----------------------------------------------------\r\n");
     }
 
     /**
@@ -110,10 +110,28 @@ public class Ui {
      * @param item last unmarked task
      */
     public String unmark(Task item) {
-        return ("    ____________________________________________________________\r\n"
+        return ("   -----------------------------------------------------\r\n"
                 + "     OK, I've marked this task as not done yet:\r\n"
                 + "       [ ] " + item.name() + "\r\n"
-                + "    ____________________________________________________________");
+                + "    -----------------------------------------------------");
     }
 
+    /**
+     * Returns the message for delete command
+     *
+     * @param input the deleted task
+     */
+    public String returnDeleteMessage(Task input) {
+        return ("    -----------------------------------------------------\r\n"
+                + "     Noted. I've removed this task:\r\n"
+                + "       " + returnOneItemAsString(input) + "\r\n"
+                + "     Now you have 4 tasks in the list.\r\n"
+                + "    -----------------------------------------------------");
+    }
+
+    public String returnFindMessage(ArrayList<Task> list) {
+        return ("    -----------------------------------------------------"
+                + "Here are the matching tasks in your list:\r\n")
+                + listAll(list);
+    }
 }

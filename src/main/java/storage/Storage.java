@@ -46,15 +46,16 @@ public class Storage {
     /**
      * Writes the latest list to file john.txt
      *
-     * @param al latest list of Task
+     * @param taskList latest list of Task
      * @throws IOException possible exceptions from file IO
      */
-    public void save(ArrayList<Task> al) throws IOException {
+    public void save(TaskList taskList) throws IOException {
         FileWriter fw = new FileWriter(this.file);
         String content = "";
+        ArrayList<Task> al = taskList.list();
 
         for (Task task : al) {
-            content = task.getType() + " | [" + task.check() + "] " + task.name();
+            content += task.getType() + " | [" + task.check() + "] " + task.name();
             if (task.getType().equals("D")) {
                 Deadline task1 = (Deadline) task;
                 content += " | " + task1.returnByDate() + "\n";
@@ -78,8 +79,10 @@ public class Storage {
      */
     public TaskList load(TaskList tasklist) throws IOException {
         try {
-            assert this.file.exists();
+            //assert this.file.exists();
             Scanner sc = new Scanner(this.file);
+            assert sc.hasNext();
+
             while (sc.hasNextLine()) {
                 String[] taskLineParts = sc.nextLine().split(" \\|");
                 String taskDateTime = "";
@@ -95,7 +98,7 @@ public class Storage {
                 switch (taskType) {
                 case "D":
                     LocalDateTime by = LocalDateTime.parse(taskDateTime, DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
-                    task = new Deadline(taskDescription, taskType, by);
+                    task = new Deadline(taskDescription, "deadline", by);
                     if (taskStatus) {
                         task.done();
                     }
@@ -108,14 +111,14 @@ public class Storage {
                             fromPart, DateTimeFormatter.ofPattern("d/M/yyyy HHmm")
                     );
                     LocalTime toTime = LocalTime.parse(toPart, DateTimeFormatter.ofPattern("HHmm"));
-                    task = new Event(taskDescription, taskType, fromDateTime, toTime);
+                    task = new Event(taskDescription, "event", fromDateTime, toTime);
                     if (taskStatus) {
                         task.done();
                     }
                     tasklist.add(task);
                     break;
                 case "T":
-                    task = new Task(taskDescription, taskType);
+                    task = new Task(taskDescription, "todo");
                     if (taskStatus) {
                         task.done();
                     }
