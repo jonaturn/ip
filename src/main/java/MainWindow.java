@@ -39,7 +39,7 @@ public class MainWindow extends AnchorPane {
 
     /** Injects the Duke instance */
     public void setJohn(John j) {
-        john = j;
+        //john = j;
     }
 
     /**

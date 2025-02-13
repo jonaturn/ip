@@ -6,8 +6,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import exceptions.DeleteException;
-import exceptions.TaskException;
+import exceptions.*;
 import storage.Storage;
 import tasks.Deadline;
 import tasks.Event;
@@ -46,7 +45,7 @@ public class Parser {
             switch (type) {
             case EXIT:
                 //ui.exit();
-                storage.save(listOfTasks);
+                storage.save(tasklist);
                 return ui.exit();
             case LIST:
                 return ui.listAll(listOfTasks);
@@ -63,10 +62,7 @@ public class Parser {
             case TODO:
                 description = input.substring(5);
                 if (description.isEmpty()) {
-                    throw new TaskException(
-                            "    \n    ____________________________________________________________\r\n"
-                                    + "       The description of a todo cannot be empty.\r\n"
-                                    + "    ____________________________________________________________");
+                    throw new TodoException();
                 }
                 item = new Todo(description, "todo");
                 listOfTasks.add(item);
@@ -74,10 +70,7 @@ public class Parser {
             case DEADLINE:
                 description = input.substring(9).split("/by")[0].trim();
                 if (description.isEmpty()) {
-                    throw new TaskException(
-                            "    \n    ____________________________________________________________\r\n"
-                                    + "       The description of a deadline cannot be empty.\r\n"
-                                    + "    ____________________________________________________________");
+                    throw new DeadlineException();
                 }
 
                 String byPart = input.split("/by")[1].trim();
@@ -88,13 +81,9 @@ public class Parser {
             case EVENT:
                 description = input.substring(6).split("/from")[0].trim();
                 if (description.isEmpty()) {
-                    throw new TaskException(
-                            "    \n    ____________________________________________________________\r\n"
-                                    + "       The description of an event cannot be empty.\r\n"
-                                    + "    ____________________________________________________________");
+                    throw new EventException();
                 }
 
-                // description = input.substring(6);
                 String fromPart = input.split("/from")[1].split("/to")[0].trim();
                 String toPart = input.split("/to")[1].trim();
                 fromDateTime = LocalDateTime.parse(fromPart, DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
@@ -110,24 +99,15 @@ public class Parser {
 
                 index = Integer.parseInt(description) - 1;
                 listOfTasks.remove(index);
-                return ("    ____________________________________________________________\r\n"
-                        + "     Noted. I've removed this task:\r\n"
-                        + "       " + ui.returnOneItemAsString(listOfTasks.get(index)) + "\r\n"
-                        + "     Now you have 4 tasks in the list.\r\n"
-                        + "    ____________________________________________________________");
+                return ui.returnDeleteMessage(listOfTasks.get(index));
             case FIND:
                 description = input.substring(5);
                 if (description.isEmpty()) {
                     throw new TaskException("Cannot find blank.");
                 }
-                return ("    ____________________________________________________________"
-                        + "Here are the matching tasks in your list:\r\n")
-                        + ui.listAll(tasklist.match(description));
+                return ui.returnFindMessage(tasklist.match(description));
             case INVALID:
-                throw new TaskException(
-                        "\n    ____________________________________________________________\r\n"
-                                + "     Wrong input, stop trolling :-(\r\n"
-                                + "    ____________________________________________________________");
+                throw new InvalidTaskException();
                 // break;
             default:
                 throw new AssertionError("Unknown command type");
@@ -135,7 +115,7 @@ public class Parser {
             }
         } catch (TaskException e) {
             System.out.println(e.getMessage());
-            storage.save(listOfTasks);
+            storage.save(tasklist);
             return e.getMessage()
                     + "\n"
                     + ui.exit();

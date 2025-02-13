@@ -46,7 +46,7 @@ public class John {
      * returns john logo
      */
     public String returnLogo() throws IOException {
-        tasklist = storage.load(tasklist);
+        this.tasklist = storage.load(tasklist);
         return ui.returnLogo();
     }
 
@@ -54,7 +54,6 @@ public class John {
      *
      */
     public String getResponse(String input) throws IOException {
-        String responseString = "";
         return parser.inputHandling(input, tasklist, ui, storage);
     }
 
