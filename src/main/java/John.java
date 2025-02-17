@@ -34,7 +34,6 @@ public class John {
         tasklist = storage.load(tasklist);
 
         sc.close();
-
     }
 
     /**
