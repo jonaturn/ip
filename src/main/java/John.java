@@ -33,11 +33,6 @@ public class John {
         String input;
         tasklist = storage.load(tasklist);
 
-        //ui.greet();
-        //while (listen) {
-        //input = sc.nextLine();
-        //listen = parser.inputHandling(input, tasklist, ui, storage);
-        //}
         sc.close();
 
     }
