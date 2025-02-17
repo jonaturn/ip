@@ -32,7 +32,6 @@ public class John {
         boolean listen = true;
         String input;
         tasklist = storage.load(tasklist);
-
         sc.close();
     }
 
