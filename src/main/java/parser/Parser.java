@@ -126,7 +126,6 @@ public class Parser {
                 return ui.getTagMessage(tag, tasklist.list().get(taskIndex));
             case INVALID:
                 throw new InvalidInputException();
-                // break;
             default:
                 throw new AssertionError("Unknown command type");
             }
