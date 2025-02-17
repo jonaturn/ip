@@ -49,6 +49,7 @@ public class Parser {
         try {
             switch (type) {
             case EXIT:
+                //ui.exit();
                 storage.save(tasklist);
                 return ui.exit();
             case LIST:
