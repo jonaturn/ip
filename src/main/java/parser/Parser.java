@@ -129,7 +129,6 @@ public class Parser {
                 // break;
             default:
                 throw new AssertionError("Unknown command type");
-                // break;
             }
         } catch (TaskException e) {
             System.out.println(e.getMessage());
