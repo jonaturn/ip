@@ -44,7 +44,7 @@ public class John {
     }
 
     /**
-     *
+     * Invoke the function that handles input
      */
     public String getResponse(String input) throws IOException {
         return parser.inputHandling(input, tasklist, ui, storage);
