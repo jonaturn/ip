@@ -56,7 +56,6 @@ public class John {
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
-        // init
         new John().run();
     }
 
