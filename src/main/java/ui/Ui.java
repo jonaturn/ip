@@ -142,7 +142,7 @@ public class Ui {
      * @return
      */
     public String returnFindMessage(ArrayList<Task> list) {
-        return ("    ---------------------------------------------------"
+        return ("---------------------------------------------------\n"
                 + "Here are the matching tasks in your list:\r\n")
                 + listAll(list);
     }
