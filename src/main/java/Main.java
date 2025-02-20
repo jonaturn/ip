@@ -21,7 +21,7 @@ public class Main extends Application {
             Scene scene = new Scene(ap);
             stage.setScene(scene);
             stage.setMinHeight(600);
-            stage.setMinWidth(417);
+            stage.setMinWidth(900);
             fxmlLoader.<MainWindow>getController().setJohn(john);
             stage.show();
         } catch (IOException e) {

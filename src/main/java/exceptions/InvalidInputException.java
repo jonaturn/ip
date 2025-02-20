@@ -8,7 +8,7 @@ public class InvalidInputException extends TaskException {
      * Empty Constructor to create default message
      */
     public InvalidInputException() {
-        super("\n    -----------------------------------------------------\r\n"
+        super("    -----------------------------------------------------\r\n"
                 + "     Wrong input, stop trolling :-(\r\n"
                 + "    -----------------------------------------------------");
     }
