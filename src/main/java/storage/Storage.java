@@ -27,7 +27,7 @@ public class Storage {
      * Constructor class for Storage
      */
     public Storage() {
-        Path path = Paths.get("data", "john.txt");
+        Path path = Paths.get("john.txt");
         String fileName = path.toString();
         this.file = new File(fileName);
 
@@ -76,6 +76,8 @@ public class Storage {
         fw.flush();
         fw.write(content);
         fw.close();
+
+        System.out.println("\nTasks saved to: " + this.file.getAbsolutePath());
     }
 
     /**
@@ -86,10 +88,7 @@ public class Storage {
      */
     public TaskList load(TaskList tasklist) throws IOException {
         try {
-            //assert this.file.exists();
             Scanner sc = new Scanner(this.file);
-            assert sc.hasNext();
-
             while (sc.hasNextLine()) {
                 String[] taskLineParts = sc.nextLine().split(" \\|");
                 String[] tags = taskLineParts[0].substring(5).split(" ");
