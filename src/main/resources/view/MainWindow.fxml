@@ -6,7 +6,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainWindow">
     <children>
@@ -16,15 +15,7 @@
             <content>
                 <VBox fx:id="dialogContainer" prefHeight="552.0" prefWidth="388.0">
                     <children>
-                        <ButtonBar prefHeight="40.0" prefWidth="200.0">
-                            <buttons>
-                                <Button mnemonicParsing="false" text="Close">
-                                    <font>
-                                        <Font size="10.0" />
-                                    </font>
-                                </Button>
-                            </buttons>
-                        </ButtonBar>
+                        <ButtonBar prefHeight="40.0" prefWidth="200.0" />
                     </children>
                 </VBox>
             </content>
