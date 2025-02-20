@@ -56,11 +56,10 @@ public class MainWindow extends AnchorPane {
      * the dialog container. Clears the user input after processing.S
      */
     @FXML
-    public void handleUserInput() throws IOException {
+    public void handleUserInput() throws Exception {
         String input = userInput.getText();
         assert input != null;
         String response = john.getResponse(input);
-        assert response != null;
 
         if (response.contains("Bye. Hope to see you again soon!")) {
             Platform.exit();

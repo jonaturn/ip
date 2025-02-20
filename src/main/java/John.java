@@ -46,7 +46,7 @@ public class John {
     /**
      * Invoke the function that handles input
      */
-    public String getResponse(String input) throws IOException {
+    public String getResponse(String input) throws Exception {
         return parser.inputHandling(input, tasklist, ui, storage);
     }
 

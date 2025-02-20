@@ -34,7 +34,7 @@ public class Parser {
      * @return boolean to continue receiving input
      * @throws IOException possible error in filewriting
      */
-    public String inputHandling(String input, TaskList tasklist, Ui ui, Storage storage) throws IOException {
+    public String inputHandling(String input, TaskList tasklist, Ui ui, Storage storage) throws Exception {
         InputType type = InputType.fromString(input);
         ArrayList<Task> listOfTasks = tasklist.list();
 
@@ -126,14 +126,11 @@ public class Parser {
             case INVALID:
                 throw new InvalidInputException();
             default:
-                throw new AssertionError("Unknown command type");
+                throw new InvalidInputException();
             }
         } catch (TaskException e) {
-            System.out.println(e.getMessage());
-            storage.save(tasklist);
-            return e.getMessage()
-                    + "\n"
-                    + ui.exit();
+            return e.getMessage();
+
         }
     }
 }
