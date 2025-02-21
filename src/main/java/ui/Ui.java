@@ -177,4 +177,22 @@ public class Ui {
                 + returnOneItemAsString(task)
                 + "\n    ---------------------------------------------------");
     }
+
+    /**
+     * Returns a list of all commands and the format
+     */
+    public String getHelp() {
+        return "---------------------------------------------------\r\n"
+                + "List of commands:\r\n"
+                + "todo: todo [taskName]\r\n"
+                + "deadline: deadline [taskName] by [dateTime dd/mm/yyyy HHmm]\r\n"
+                + "event: event [taskName] from [startDate dd/mm/yyyy HHmm] to [endDate dd/mm/yyy HHmm]\r\n"
+                + "tag: tag [taskNumber] [tagDescription]\r\n"
+                + "list: list\r\n"
+                + "mark: mark [taskNumber]\r\n"
+                + "unmark: unmark [taskNumber]\r\n"
+                + "find: find [subString]\r\n"
+                + "bye: bye\r\n"
+                + "---------------------------------------------------";
+    }
 }

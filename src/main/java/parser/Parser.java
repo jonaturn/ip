@@ -132,6 +132,8 @@ public class Parser {
                 return ui.getTagMessage(tag, tasklist.list().get(taskIndex));
             case INVALID:
                 throw new InvalidInputException();
+            case HELP:
+                return ui.getHelp();
             default:
                 throw new InvalidInputException();
             }
