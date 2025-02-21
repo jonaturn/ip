@@ -46,13 +46,6 @@ public class Task {
     }
 
     /**
-     * Returns the status of this task
-     */
-    public Boolean getStatus() {
-        return this.status;
-    }
-
-    /**
      * adds a tag to the task
      */
     public void addTag(String tag) {
@@ -85,14 +78,6 @@ public class Task {
         return check;
     }
 
-    public void toggle() {
-        this.status = !this.status;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     /**
      * Returns the initial of the type of task
      *
@@ -108,5 +93,12 @@ public class Task {
         } else {
             return "";
         }
+    }
+
+    /**
+     * Returns duration of task in a specific format
+     */
+    public String getDuration() {
+        return "";
     }
 }

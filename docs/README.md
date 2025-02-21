@@ -35,7 +35,7 @@ Format: `event [taskName] from [startDate dd/mm/yyyy HHmm] to [endDate dd/mm/yyy
 
 Example:
 
-- `event 2XU /from 28/04/2025 06:30 /to 28/04/2025 09:00`
+- `event 2XU from 28/04/2025 06:30 to 28/04/2025 09:00`
 
 ---
 

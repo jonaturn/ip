@@ -62,7 +62,14 @@ public class Ui {
      * @return a string to be printed
      */
     public String returnOneItemAsString(Task input) {
-        return "[" + input.getType() + "][" + input.check() + "] " + input.getName();
+        return "["
+                + input.getType()
+                + "]["
+                + input.check()
+                + "] "
+                + input.getName()
+                + " "
+                + input.getDuration();
     }
 
     /**
@@ -106,7 +113,11 @@ public class Ui {
     public String mark(Task item) {
         return ("    ---------------------------------------------------\r\n"
                 + "     Nice! I've marked this task as done:\r\n"
-                + "       [X] return " + item.getName() + "\r\n"
+                + "       [X] return "
+                + item.getName()
+                + " "
+                + item.getTags()
+                + "\r\n"
                 + "    ---------------------------------------------------\r\n");
     }
 
@@ -118,7 +129,11 @@ public class Ui {
     public String unmark(Task item) {
         return ("   ---------------------------------------------------\r\n"
                 + "     OK, I've marked this task as not done yet:\r\n"
-                + "       [ ] " + item.getName() + "\r\n"
+                + "       [ ] "
+                + item.getName()
+                + " "
+                + item.getTags()
+                + "\r\n"
                 + "    ---------------------------------------------------");
     }
 

@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -113,13 +112,17 @@ public class Storage {
                     tasklist.add(task);
                     break;
                 case "E":
-                    String fromPart = taskDateTime.split("/from")[1].split("/to")[0].trim();
-                    String toPart = taskDateTime.split("/to")[1].trim();
+                    String fromPart = taskDateTime.split("from")[1].split("to")[0].trim();
+                    String toPart = taskDateTime.split("to")[1].trim();
                     LocalDateTime fromDateTime = LocalDateTime.parse(
-                            fromPart, DateTimeFormatter.ofPattern("d/M/yyyy HHmm")
+                            fromPart,
+                            DateTimeFormatter.ISO_LOCAL_DATE_TIME
                     );
-                    LocalTime toTime = LocalTime.parse(toPart, DateTimeFormatter.ofPattern("HHmm"));
-                    task = new Event(taskDescription, "event", fromDateTime, toTime);
+                    LocalDateTime toDateTime = LocalDateTime.parse(
+                            toPart,
+                            DateTimeFormatter.ISO_LOCAL_DATE_TIME
+                    );
+                    task = new Event(taskDescription, "event", fromDateTime, toDateTime);
                     if (taskStatus) {
                         task.done();
                     }

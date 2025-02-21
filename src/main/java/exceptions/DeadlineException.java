@@ -12,7 +12,7 @@ public class DeadlineException extends TaskException {
      * New empty constructor with default message
      */
     public DeadlineException() {
-        super("\n    -----------------------------------------------------\r\n"
+        super("    -----------------------------------------------------\r\n"
                 + "       The description of a deadline cannot be empty.\r\n"
                 + "    -----------------------------------------------------");
     }

@@ -2,13 +2,13 @@ package parser;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import exceptions.DeadlineException;
 import exceptions.DeleteException;
 import exceptions.EventException;
+import exceptions.InvalidDateException;
 import exceptions.InvalidInputException;
 import exceptions.TaskException;
 import exceptions.TodoException;
@@ -44,7 +44,7 @@ public class Parser {
         Task item;
         LocalDateTime date;
         LocalDateTime fromDateTime;
-        LocalTime toTime;
+        LocalDateTime toDateTime;
 
         try {
             switch (type) {
@@ -72,27 +72,34 @@ public class Parser {
                 listOfTasks.add(item);
                 return ui.repeat(item, listOfTasks.size());
             case DEADLINE:
-                description = input.substring(9).split("/by")[0].trim();
+                description = input.substring(9).split("by")[0].trim();
                 if (description.isEmpty()) {
                     throw new DeadlineException();
                 }
-
-                String byPart = input.split("/by")[1].trim();
-                date = LocalDateTime.parse(byPart, DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
+                String byPart = input.split("by")[1].trim();
+                try {
+                    date = LocalDateTime.parse(byPart, DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
+                } catch (Exception e) {
+                    throw new InvalidDateException();
+                }
                 item = new Deadline(description, "deadline", date);
                 listOfTasks.add(item);
                 return ui.repeat(item, listOfTasks.size());
             case EVENT:
-                description = input.substring(6).split("/from")[0].trim();
+                description = input.substring(6).split("from")[0].trim();
                 if (description.isEmpty()) {
                     throw new EventException();
                 }
 
-                String fromPart = input.split("/from")[1].split("/to")[0].trim();
-                String toPart = input.split("/to")[1].trim();
-                fromDateTime = LocalDateTime.parse(fromPart, DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
-                toTime = LocalTime.parse(toPart, DateTimeFormatter.ofPattern("HHmm"));
-                item = new Event(description, "event", fromDateTime, toTime);
+                String fromPart = input.split("from")[1].split("to")[0].trim();
+                String toPart = input.split("to")[1].trim();
+                try {
+                    fromDateTime = LocalDateTime.parse(fromPart, DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
+                    toDateTime = LocalDateTime.parse(toPart, DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
+                } catch (Exception e) {
+                    throw new InvalidDateException();
+                }
+                item = new Event(description, "event", fromDateTime, toDateTime);
                 listOfTasks.add(item);
                 return ui.repeat(item, listOfTasks.size());
             case DELETE:
