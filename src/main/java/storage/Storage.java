@@ -103,7 +103,10 @@ public class Storage {
 
                 switch (taskType) {
                 case "D":
-                    LocalDateTime by = LocalDateTime.parse(taskDateTime, DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
+                    LocalDateTime by = LocalDateTime.parse(
+                            taskDateTime.trim(),
+                            DateTimeFormatter.ISO_LOCAL_DATE_TIME
+                    );
                     task = new Deadline(taskDescription, "deadline", by);
                     if (taskStatus) {
                         task.done();
