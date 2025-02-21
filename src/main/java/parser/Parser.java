@@ -139,6 +139,8 @@ public class Parser {
             }
         } catch (TaskException e) {
             return e.getMessage();
+        } catch (Exception e) {
+            return "Wrong input, try again";
         }
     }
 }
