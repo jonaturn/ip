@@ -98,7 +98,7 @@ public class Storage {
                 String taskType = taskLineParts[1].trim();
                 String[] taskStatusAndDescription = taskLineParts[2].split("]");
                 boolean taskStatus = taskStatusAndDescription[0].contains("X");
-                String taskDescription = taskStatusAndDescription[1];
+                String taskDescription = taskStatusAndDescription[1].trim();
                 Task task;
 
                 switch (taskType) {
