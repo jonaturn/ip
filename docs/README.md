@@ -5,7 +5,7 @@
 Welcome to chatbot John's User Guide. John is a gigachad bot meant to help you plan your tasks. \
 John never forgets your tasks and their deadlines. 
 
-![Ui..png](Ui..png)
+![Ui.png](Ui.png)
 
 ## Features
 
@@ -23,7 +23,7 @@ Format: `deadline [taskName] by [dateTime dd/mm/yyyy HHmm]`
 
 Example:
 
-- `deadline Submit Assignment by 15/02/2025 23:59`
+- `deadline Submit Assignment by 15/02/2025 2359`
 
 
 ---
@@ -35,7 +35,7 @@ Format: `event [taskName] from [startDate dd/mm/yyyy HHmm] to [endDate dd/mm/yyy
 
 Example:
 
-- `event 2XU from 28/04/2025 06:30 to 28/04/2025 09:00`
+- `event 2XU from 28/04/2025 0630 to 28/04/2025 0900`
 
 ---
 
